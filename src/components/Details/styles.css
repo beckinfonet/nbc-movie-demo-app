@@ -1,0 +1,11 @@
+.main-box {
+  margin: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-box .title {
+  font-size: 50px;
+  font-weight: 600;
+}

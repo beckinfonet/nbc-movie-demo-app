@@ -1,0 +1,14 @@
+.main-container {
+  margin: 0px;
+  padding: 0px;
+}
+
+.movie-box {
+  margin: 10%;
+  padding: 5%;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

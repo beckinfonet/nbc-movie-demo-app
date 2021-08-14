@@ -1,0 +1,22 @@
+.list-container {
+  background-color: azure;
+}
+
+.list-container .filter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10%;
+  background-color: #2ae3d6;
+}
+
+.list-container .filter-box .filter-or-sort {
+  display: flex;
+  flex-direction: row;
+  background-color: white
+}
+
+.list-container .filter-box .filter-or-sort .sort-it-by {
+  width: 20%;
+  background-color: yellow;
+}
