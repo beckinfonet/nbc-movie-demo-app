@@ -17,7 +17,7 @@ class List extends Component {
       showModal: false,
       newMovieName: '',
       newMovieCategory: '',
-      isFeatured: null
+      isFeatured: ''
     }
   }
 
@@ -109,7 +109,6 @@ class List extends Component {
   render() {
     const unique = [...new Set(this.state.movieList?.items?.map(item => item.category)), 'all'];
     const filteredMovies = this.state.movieList?.items?.filter(movie => movie.category === this.state.selectedCategory);
-    console.log('this.props::: ', this.state);
     return (
       <div className="list-container">
         {unique?.length &&
@@ -120,7 +119,7 @@ class List extends Component {
               </div>
               <div className="sort-it-by">
                 <p>sort by:</p>
-                <select value={this.state.sortBy} onClick={this.handleSort}>
+                <select value={this.state.sortBy} onClick={this.handleSort} onChange={() => {}}>
                   {this.state.sortValues?.map((option, idx) => (
                     <option key={idx}>{option}</option>
                   ))}
