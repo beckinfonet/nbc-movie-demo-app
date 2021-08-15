@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import data from '../../mock.json';
+import { connect } from "react-redux";
+import * as actions from './constants.js';
+import Loader from '../../common/Loader';
 
 import './styles.css';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      movieList: []
-    }
-  }
-
+ 
   componentDidMount() {
-    this.setState({ movieList: data });
+    this.props.onRequestMovieList();
   }
 
   navigateToDetails = (movie) => {
@@ -25,12 +20,12 @@ class Home extends Component {
   }
 
   render() {
-    console.log('state', this.state.movieList.items)
     return (
       <div className="main-container">
         <p>Home page lol</p>
+        {this.props.fetching && <Loader />}
         {
-          this.state.movieList?.items?.length && this.state.movieList.items.map(movie => {
+          this.props.movies?.length && this.props.fetching !== true && this.props.movies.map(movie => {
             return (
               <div className="movie-box" key={movie.id} onClick={() => this.navigateToDetails(movie)}>
                 <div>{movie.name}</div>
@@ -44,14 +39,18 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home);
+const mapStateToProps = state => {
+  return {
+    fetching: state.movieHomeReducer.fetching,
+    movies: state.movieHomeReducer.moviesList,
+    error: state
+  };
+};
 
-/*
-Home Page Requirements
-The Home page should show the following:
-  Feature DVDs from the JSON - DONE
-  Feature products will show name and image - DONE
-  Display vertically or carousel ??? - [VERTICAL - DONE, CAROUSEL - NOT Done]
-  A user should be able to click the feature product and go to the detail page. - DONE
-  A user should also be able to navigate to the List page. - DONE
-*/
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestMovieList: () => dispatch({ type: actions.MOVIE_LIST_REQUEST })
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

@@ -4,28 +4,38 @@ import Immutable from 'seamless-immutable';
 const { Types, Creators } = createActions({
   getMovies: ['data'],
   getMoviesSuccess: ['data'],
-  getMoviesFailure: null
+  getMoviesFailure: null,
 });
 
 export const campaignTypes = Types;
 export default Creators;
 
 export const INITIAL_STATE = Immutable({
-  getMovies: null,
+  moviesList: null,
   fetching: null,
   error: null
 });
 
 const getMovies = state => ({
   ...state,
+  fetching: true,
+  error: false
 })
 
-const getMoviesSuccess = (state, action) => ({
-  ...state,
-})
+const getMoviesSuccess = (state, action) => {
+  return {
+    ...state,
+    fetching: false,
+    error: false,
+    moviesList: action.response.items
+  }
+}
 
 const getMoviesFailure = (state, action) => ({
   ...state,
+  fetching: false,
+  error: true,
+  moviesList: []
 })
 
 export const reducer = createReducer(INITIAL_STATE, {
