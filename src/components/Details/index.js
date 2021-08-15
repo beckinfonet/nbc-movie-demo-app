@@ -16,4 +16,3 @@ class Details extends Component {
 }
 
 export default withRouter(Details);
-// deatils
