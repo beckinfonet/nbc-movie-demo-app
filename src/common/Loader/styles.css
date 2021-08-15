@@ -1,0 +1,8 @@
+.loader-container {
+  background-color: deepskyblue;
+  margin: 10%;
+}
+
+.loader-container .loader-text {
+  font-size: 25px;
+}
