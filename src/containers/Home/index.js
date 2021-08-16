@@ -9,7 +9,9 @@ import './styles.css';
 class Home extends Component {
 
   componentDidMount() {
-    this.props.onRequestMovieList();
+    if(!this.props.movies) {
+      this.props.onRequestMovieList();
+    }
   }
 
   navigateToDetails = (movie) => {

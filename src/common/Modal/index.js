@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-const Modal = ({ handleClose, show, children }) => {
+const Modal = ({ handleClose, handleSubmit, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
 
   return (
@@ -10,6 +10,9 @@ const Modal = ({ handleClose, show, children }) => {
         {children}
         <button type="button" onClick={handleClose}>
           Close
+        </button>
+        <button type="button" onClick={handleSubmit}>
+          Submit
         </button>
       </section>
     </div>
