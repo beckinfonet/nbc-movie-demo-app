@@ -12,16 +12,10 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/list">List</Link>
-              </li>
-            </ul>
+        <div >
+          <nav className="nav-container">
+            <h2><Link to="/"><p className="nav-tags">Home</p></Link></h2>
+            <h2 ><Link to="/list"><p className="nav-tags">List</p></Link></h2>
           </nav>
           <Switch>
             <Route path='/' exact><Home /></Route>

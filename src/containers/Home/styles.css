@@ -5,10 +5,27 @@
 
 .movie-box {
   margin: 10%;
+  margin-top: 0px;
   padding: 5%;
   background-color: aliceblue;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.main-container .home-page { 
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.photo {
+  height: 800px;
+  width: 600px;
 }
