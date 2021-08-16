@@ -24,14 +24,14 @@ class Home extends Component {
   render() {
     return (
       <div className="main-container">
-        <p>Home page</p>
+        <p className="home-page bold">Home page</p>
         {this.props.fetching && <Loader />}
         {
           this.props.movies?.filter(name => name.featured).map(movie => {
             return (
               <div className="movie-box" key={movie.id} onClick={() => this.navigateToDetails(movie)}>
-                <div>{movie.name}</div>
-                <img src={movie.image} alt='img' />
+                <div><p className="home-page">{movie.name}</p></div>
+                <img src={movie.image} alt='img' className="photo" />
               </div>
             )
           })

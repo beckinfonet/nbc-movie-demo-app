@@ -5,18 +5,52 @@
 .list-container .filter-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin: 10%;
-  background-color: #2ae3d6;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  background-color: aliceblue;
 }
 
 .list-container .filter-box .filter-or-sort {
-  display: flex;
-  flex-direction: row;
-  background-color: white
+  align-items: center;
+  width: 100%;
 }
 
 .list-container .filter-box .filter-or-sort .sort-it-by {
+  width: 30%;
+}
+
+.photo {
+  height: 800px;
+  width: 600px;
+}
+
+.new-movie-box {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-new-movie-title {
+  font-weight: bold;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  margin: 3%;
+  color: white;
+}
+
+.delete-movie {
+  color: white
+}
+
+.add-button {
+  background-color: rgb(17, 144, 228);
   width: 20%;
-  background-color: yellow;
+  border-radius: 7px;
+}
+
+:hover .add-button {
+  cursor: pointer;
 }

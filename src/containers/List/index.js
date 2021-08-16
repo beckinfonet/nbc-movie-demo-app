@@ -23,7 +23,7 @@ class List extends Component {
   }
 
   componentDidMount() {
-      this.props.onRequestMovieList();
+    this.props.onRequestMovieList();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -85,9 +85,11 @@ class List extends Component {
     return (
       <div className="movie-box" key={movie.id}>
         {this.props.location.pathname === '/list/admin=true'
-          && <p onClick={() => this.removeMovie(movie)}>Delete</p>}
-        <div>{movie.name}</div>
-        <img src={movie.image} alt='img' />
+          && <div className="add-button">
+            <p className="add-new-movie-title" onClick={() => this.removeMovie(movie)}>Delete</p>
+          </div>}
+        <div><h1>{movie.name}</h1></div>
+        <img src={movie.image} alt='img' className='photo' />
       </div>
     );
   }
@@ -96,8 +98,11 @@ class List extends Component {
     return movie.map(film => {
       return (
         <div className="movie-box" key={film.id}>
-          {this.props.location.pathname === '/list/admin=true' 
-          && <p onClick={() => this.removeMovie(film)}>Delete</p>}
+          {this.props.location.pathname === '/list/admin=true'
+            && <div className="add-button">
+              <p className="add-new-movie-title" onClick={() => this.removeMovie(film)}>Delete</p>
+            </div>
+          }
           <div><div>{film.name}</div>
             <img src={film.image} alt='img' />
           </div>
@@ -107,7 +112,12 @@ class List extends Component {
   }
 
   handleModal = () => {
-    this.setState({ showModal: !this.state.showModal });
+    this.setState({ 
+      showModal: !this.state.showModal,
+      newMovieName: '',
+      newMovieCategory: '',
+      isFeatured: ''
+    });
   }
 
   handleChange = (event) => {
@@ -122,7 +132,12 @@ class List extends Component {
       category: this.state.newMovieCategory,
       featured: this.state.isFeatured,
     });
-    this.setState({ showModal: !this.state.showModal })
+    this.setState({
+      showModal: !this.state.showModal,
+      newMovieName: '',
+      newMovieCategory: '',
+      isFeatured: ''
+    })
   }
 
   removeMovie = (movie) => {
@@ -137,6 +152,16 @@ class List extends Component {
     this.setState({ isFeatured });
   }
 
+  checkReadyness = () => {
+    if (this.state.newMovieName.length &&
+      this.state.newMovieCategory.length &&
+      this.state.isFeatured !== '') {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const { isFeatured } = this.state;
     const unique = [...new Set(this.state.movieList?.map(item => item.category)), 'all'];
@@ -145,25 +170,33 @@ class List extends Component {
       <div className="list-container">
         {unique?.length &&
           <div className="filter-box">
-            <div className="filter-or-sort">
-              <div>
-                <p>Please make a selection to filter:</p>
+            <div>
+              <div className="filter-or-sort">
+                <h2>Please make a selection to filter:</h2>
               </div>
-              <div className="sort-it-by">
-                <p>sort by:</p>
-                <select value={this.state.sortBy} onChange={this.handleSort}>
-                  {this.state.sortValues?.map((option, idx) => (
+              <div>
+                <select value={this.state.selectedCategory} onChange={this.handleSelection}>
+                  {unique?.map((option, idx) => (
                     <option key={idx}>{option}</option>
                   ))}
                 </select>
               </div>
             </div>
-            <select value={this.state.selectedCategory} onChange={this.handleSelection}>
-              {unique?.map((option, idx) => (
-                <option key={idx}>{option}</option>
-              ))}
-            </select>
-            {this.props.location.pathname === '/list/admin=true' && <div onClick={this.handleModal}><p >Add new movie</p></div>}
+
+            <div className="sort-it-by">
+              <h3>sort by:</h3>
+              <select value={this.state.sortBy} onChange={this.handleSort}>
+                {this.state.sortValues?.map((option, idx) => (
+                  <option key={idx}>{option}</option>
+                ))}
+              </select>
+            </div>
+            {this.props.location.pathname === '/list/admin=true' &&
+              <div className="new-movie-box">
+                <div className="add-button" onClick={this.handleModal}>
+                  <p className="add-new-movie-title">Add new movie</p>
+                </div>
+              </div>}
           </div>}
 
         {
@@ -178,33 +211,45 @@ class List extends Component {
         }
         {
           this.state.showModal &&
-          <Modal show={this.state.showModal} handleClose={this.handleModal} handleSubmit={this.handleSubmit}>
-            <p>Add your new blockbuster :)</p>
+          <Modal show={this.state.showModal} handleClose={this.handleModal} handleSubmit={this.handleSubmit} readyToSubmit={this.checkReadyness()}>
+            <p className="main-title">ADD NEW RECORD</p>
             <div>
-              <p>Name:</p>
-              <input type="text" name="newMovieName" value={this.state.newMovieName} onChange={this.handleChange} />
-              <input type="text" name="newMovieCategory" value={this.state.newMovieCategory} onChange={this.handleChange} />
-              <p>Is this new movie featured?</p>
-              <label>
-                <input
-                  type="radio"
-                  name="isFeatured"
-                  value="true"
-                  checked={isFeatured === true}
-                  onChange={this.handleRadio} />
-                Yes
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  name="isFeatured"
-                  value="false"
-                  checked={isFeatured === false}
-                  onChange={this.handleRadio} />
-                No
-              </label>
+
+              <div className="fillout">
+                <div>
+                  <p>Name:</p>
+                  <input type="text" placeholder="Name" name="newMovieName" value={this.state.newMovieName} onChange={this.handleChange} />
+                </div>
+                <div>
+                  <p>Category</p>
+                  <input type="text" placeholder="Category" name="newMovieCategory" value={this.state.newMovieCategory} onChange={this.handleChange} />
+                </div>
+              </div>
+
+
+              <div className="input-fields">
+                <p>Is this new movie featured?</p>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="isFeatured"
+                      value="true"
+                      checked={isFeatured === true}
+                      onChange={this.handleRadio} />
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="isFeatured"
+                      value="false"
+                      checked={isFeatured === false}
+                      onChange={this.handleRadio} />
+                    No
+                  </label>
+                </div>
+              </div>
             </div>
           </Modal>
         }
