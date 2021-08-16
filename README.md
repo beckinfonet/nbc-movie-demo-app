@@ -1,12 +1,11 @@
-# Getting Started with Create React App
+# How to run this app:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory on the root level, you can run:
 
-### `yarn`
+```yarn``` or ```npm install```
 in order to install dependencies;
 
 Once dependencies have been installed successfully, you can start the app by running:
