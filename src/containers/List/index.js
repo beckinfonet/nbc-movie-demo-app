@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
 import Modal from '../../common/Modal';
-import data from '../../mock.json';
 
 import './styles.css';
 
@@ -22,7 +22,13 @@ class List extends Component {
   }
 
   componentDidMount() {
-    this.setState({ movieList: data });
+    this.props.onRequestMovieList();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.movieList !== this.props.movieList){
+      this.setState({ movieList: this.props.movieList });
+    }
   }
 
   handleSelection = e => {
@@ -64,13 +70,13 @@ class List extends Component {
 
   handleSort = (event) => {
     const sorted = event.target.value === 'A-Z'
-      ? this.sortByAcs(this.state.movieList?.items)
-      : this.sortByDesc(this.state.movieList?.items);
+      ? this.sortByAcs(this.state.movieList)
+      : this.sortByDesc(this.state.movieList);
 
     this.setState({
       sortBy: event.target.value,
       selectedCategory: 'all',
-      movieList: { items: sorted }
+      movieList: sorted
     });
   }
 
@@ -106,9 +112,10 @@ class List extends Component {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
   }
+
   render() {
-    const unique = [...new Set(this.state.movieList?.items?.map(item => item.category)), 'all'];
-    const filteredMovies = this.state.movieList?.items?.filter(movie => movie.category === this.state.selectedCategory);
+    const unique = [...new Set(this.state.movieList?.map(item => item.category)), 'all'];
+    const filteredMovies = this.state.movieList?.filter(movie => movie.category === this.state.selectedCategory);
     return (
       <div className="list-container">
         {unique?.length &&
@@ -125,9 +132,6 @@ class List extends Component {
                   ))}
                 </select>
               </div>
-
-
-
             </div>
             <select value={this.state.selectedCategory} onChange={this.handleSelection}>
               {unique?.map((option, idx) => (
@@ -140,8 +144,8 @@ class List extends Component {
 
         {
           this.state.selectedCategory === 'all' &&
-          this.state.movieList.items?.length &&
-          this.state.movieList.items.map(movie => {
+          this.state.movieList.length &&
+          this.state.movieList.map(movie => {
             return this.renderAllMovies(movie)
           })
         }
@@ -166,4 +170,19 @@ class List extends Component {
   }
 }
 
-export default withRouter(List);
+
+const mapStateToProps = state => {
+  return {
+    fetching: state.movieHomeReducer.fetching,
+    movieList: state.movieHomeReducer.moviesList,
+    error: state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestMovieList: () => dispatch({ type: "MOVIE_LIST_REQUEST" })
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(List));

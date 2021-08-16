@@ -28,7 +28,7 @@ const getMoviesSuccess = (state, action) => {
     ...state,
     fetching: false,
     error: false,
-    moviesList: action.response.items
+    moviesList: [...action.response.items]
   }
 }
 
