@@ -119,7 +119,7 @@ class List extends Component {
               </div>
               <div className="sort-it-by">
                 <p>sort by:</p>
-                <select value={this.state.sortBy} onClick={this.handleSort} onChange={() => {}}>
+                <select value={this.state.sortBy} onChange={this.handleSort}>
                   {this.state.sortValues?.map((option, idx) => (
                     <option key={idx}>{option}</option>
                   ))}
@@ -167,13 +167,3 @@ class List extends Component {
 }
 
 export default withRouter(List);
-/*
-The list should be filterable:
-  All items - render everything - DONE
-  By category - ask which category to show - DONE
-
-The list should be sortable:
-  By category - render movies by in alphabetic order of category;
-  Alphabetically by title - automatic sort on alphabetic order;
-
-*/

@@ -13,7 +13,8 @@ export default Creators;
 export const INITIAL_STATE = Immutable({
   moviesList: null,
   fetching: null,
-  error: null
+  error: null,
+  errorDetails: []
 });
 
 const getMovies = state => ({
@@ -35,6 +36,7 @@ const getMoviesFailure = (state, action) => ({
   ...state,
   fetching: false,
   error: true,
+  errorDetails: action,
   moviesList: []
 })
 
