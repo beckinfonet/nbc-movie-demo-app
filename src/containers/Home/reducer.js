@@ -5,6 +5,8 @@ const { Types, Creators } = createActions({
   getMovies: ['data'],
   getMoviesSuccess: ['data'],
   getMoviesFailure: null,
+  addNewMovie: null,
+  removeMovie: null,
 });
 
 export const campaignTypes = Types;
@@ -40,8 +42,25 @@ const getMoviesFailure = (state, action) => ({
   moviesList: []
 })
 
+const addNewMovie = (state, action) => {
+  return {
+    ...state,
+    moviesList: [...state.moviesList, action.data]
+  }
+}
+
+const removeMovie = (state, action) => {
+  return {
+    ...state,
+    moviesList: state.moviesList.filter(item => item.id !== action.data.id),
+  }
+}
+
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_MOVIES]: getMovies,
   [Types.GET_MOVIES_SUCCESS]: getMoviesSuccess,
   [Types.GET_MOVIES_FAILURE]: getMoviesFailure,
+  [Types.ADD_NEW_MOVIE]: addNewMovie,
+  [Types.REMOVE_MOVIE]: removeMovie,
 })
