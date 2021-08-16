@@ -7,13 +7,13 @@ import Loader from '../../common/Loader';
 import './styles.css';
 
 class Home extends Component {
- 
+
   componentDidMount() {
     this.props.onRequestMovieList();
   }
 
   navigateToDetails = (movie) => {
-    this.props.history.push({ 
+    this.props.history.push({
       pathname: '/details',
       state: { data: movie }
     });
@@ -22,10 +22,10 @@ class Home extends Component {
   render() {
     return (
       <div className="main-container">
-        <p>Home page lol</p>
+        <p>Home page</p>
         {this.props.fetching && <Loader />}
         {
-          this.props.movies?.length && this.props.fetching !== true && this.props.movies.map(movie => {
+          this.props.movies?.filter(name => name.featured).map(movie => {
             return (
               <div className="movie-box" key={movie.id} onClick={() => this.navigateToDetails(movie)}>
                 <div>{movie.name}</div>
